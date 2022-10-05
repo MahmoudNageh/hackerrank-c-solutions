@@ -1,6 +1,7 @@
 # Maximizing Element With Constraints
 ## Problem Solving Intermediate
-### 11/15 Test Cases 
+### Solution_1: 11/15 Test Cases 
+### Solution_2: 15/15 Test Cases
 
 ![problem](problem_1.png)
 ![problem](problem_2.png)
