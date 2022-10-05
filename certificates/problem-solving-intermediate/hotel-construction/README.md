@@ -1,5 +1,5 @@
 # Hotel Construction
 ## Problem Solving Intermediate C Solution
-### /15 Test Cases
+### 15/15 Test Cases
 
 ![problem](problem.png)
