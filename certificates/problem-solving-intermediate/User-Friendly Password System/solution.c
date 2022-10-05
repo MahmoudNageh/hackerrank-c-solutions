@@ -1,5 +1,5 @@
 #define p 131
-#define M pow(10,9) + 7
+#define M 1000000007
 
 
 double hashing( char* password)
