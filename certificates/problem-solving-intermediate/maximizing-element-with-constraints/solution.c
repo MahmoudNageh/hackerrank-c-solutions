@@ -46,6 +46,6 @@ int maxElement(int n, int maxSum, int k)
             break;
         }
     }
-    
+   
     return maxValue;
 }
