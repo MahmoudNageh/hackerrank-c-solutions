@@ -37,3 +37,4 @@ int renameFile(char* newName,char* oldName)
     }
  
     return occ_arr[old_length] % MOD;
+}
