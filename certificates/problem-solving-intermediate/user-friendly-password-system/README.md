@@ -1,5 +1,5 @@
 # User-Friendly Password System
 ## Problem Solving Intermediate C Solution 
-### /15 Test Cases
+### 5/15 Test Cases (Probably Can't Be Solved With C)
 
 ![problem](problem.png)
