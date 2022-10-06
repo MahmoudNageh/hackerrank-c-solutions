@@ -1,5 +1,5 @@
 # Bitwise AND
 ## Problem Solving Intermediate
-### /15 test cases
+### 8/15 test cases
 
 ![problem](problem.png)
