@@ -1,91 +1,77 @@
-#define p 131
-#define M 1000000007
+#define  P          (131)
+#define  MOD        (1000000007)
 
-unsigned long long hashing( char* password, int psw_len)
+
+int setPassword(char* password)
 {
-    unsigned long long hash_value = 0;
-    
-    
-    for(long i = 0; i < psw_len; i++)
-    {
-        hash_value = hash_value + ((long)password[i] * pow(p,psw_len-(i+1)));
-    }
-    
-    return (hash_value % M); 
-
+	long res = 0;
+	
+	for (int i = 0; password[i]; i++)
+	{
+		res *= P;
+		res %= MOD;
+		res += password[i];
+		res %= MOD;
+	}
+	
+	return res;
 }
 
-int* authEvents(int events_rows, int events_columns, char*** events, int* result_count) 
+
+int authorize(long correctHash, long inputHash)
 {
-    unsigned long long authorize = 0;
-    unsigned long long hash_value = 0;
-    unsigned long long hash_value_2 = 0;
-    unsigned long long hash_value_3 = 0;
-    
-    unsigned long long x = 0;
-    unsigned long long sum =0;
-    
-    long res_count = 0;
-    long psw_len =0;
-    
-    char * password     = (char*) malloc(15 * sizeof(char));
-    char * password_2   = (char*) malloc(15 * sizeof(char));
-    char * password_3   = (char*) malloc(15 * sizeof(char));
-    int* result         = (int*) calloc(events_rows , sizeof(int));
+	if (correctHash == inputHash)
+		return 1;
+	
+	correctHash *= P;
+	correctHash %= MOD;
+	
+	// try adding digits
+	for (int i = '0'; i <= '9'; i++)
+	{
+		if ((correctHash + i) % MOD == inputHash)
+			return 1;
+	}
+	
+	// try adding lower characters
+	for (int i = 'a'; i <= 'z'; i++)
+	{
+		if ((correctHash + i) % MOD == inputHash)
+			return 1;
+	}
+	
+	// try adding upper characters
+	for (int i = 'A'; i <= 'Z'; i++)
+	{
+		if ((correctHash + i) % MOD == inputHash)
+			return 1;
+	}
+	
+	return 0;
+}
 
-    for(int i = 0; i < events_rows; i++)
-    {
-        if(events[i][0][0] == 's')
-        {
-            long j;
-            
-            for ( j = 0; events[i][1][j] != '\0' ; j++)
-            {
-                psw_len         = strlen(events[i][1]);
-                password[j]     = events[i][1][j];
-                password_2[j]   = events[i][1][j];
-                password_3[j]   = events[i][1][j];
-            }
-        
-            if(events[i][1][j] == '\0')
-            {
-                password[j] = '\0';
-                password_2[j] = 'z';
-                password_2[j+1] = '\0';
-                password_3[j] = '0';
-                password_3[j+1] = '\0';
-            }
-        }
 
-        else if(events[i][0][0] == 'a')
-        {
-            authorize = 0;
-            
-            for ( long j = 0; events[i][1][j] != '\0'; j++)
-            {
-                authorize = authorize * 10;
-                authorize += (long)events[i][1][j] - 48;
-            }
-            
-            hash_value      = hashing(password, psw_len);
-            hash_value_2    = hashing(password_2, psw_len+1);
-            hash_value_3    = hashing(password_3, psw_len+1);
-            
-            if ( authorize == hash_value || (authorize >= hash_value_3 && authorize <= hash_value_2))
-            {
-                result[res_count] = 1;
-                res_count++;
-            }
-            else
-            {
-                result[res_count] = 0;
-                res_count++;
-            }   
-        }
-        
-    }
-    
-    *result_count = res_count;
-    return result;
-
+int *authEvents(int events_rows, int events_columns, char ***events, int *result_count)
+{
+	int* res = malloc(events_rows * sizeof(int));
+	int  resIdx = 0;
+	int  currHash;
+	
+	for (int i = 0; i < events_rows; i++)
+	{
+		switch (events[i][0][0])
+		{
+			case 's':
+				currHash = setPassword(events[i][1]);
+			break;
+			
+			case 'a':
+				res[resIdx] = authorize(currHash, atoi(events[i][1]));
+				resIdx++;
+			break;
+		}
+	}
+	
+	*result_count = resIdx;
+	return res;
 }
