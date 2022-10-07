@@ -46,7 +46,7 @@ long* getMaxArea(int w, int h, int isVertical_count, bool* isVertical,int distan
 	int* horizontalCuts = (int*) malloc(isVertical_count * sizeof(int));
 	int* verticalCuts   = (int*) malloc(isVertical_count * sizeof(int));
 
-	for (int i = 0; i < isVertical_count, ; i++)
+	for (int i = 0; i < isVertical_count; i++)
 	{
 		// horizontal Boundry
 		if (isVertical[i] == 0)
