@@ -52,7 +52,7 @@ long* getMaxArea(int w, int h, int isVertical_count, bool* isVertical,int distan
 		if (isVertical[i] == 0)
 		{
 			boundry = 0;
-			horizontalCuts[horizontalCutsSize] = h - distance[i];
+			horizontalCuts[horizontalCutsSize] = distance[i];
 			horizontalCutsSize++;
 			qsort(horizontalCuts, horizontalCutsSize, sizeof(int), cmp);
 		}
